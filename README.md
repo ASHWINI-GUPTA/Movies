@@ -1,7 +1,7 @@
 # Movies
 Clone of IMDB created using ASP.NET Core.
 
-> See the `Screenshot` folder to see the snapshot of UI
+> Go to `Screenshot` folder to see the snapshot of UI
 
 ## Technology Stack
 Incognito is created using - 
