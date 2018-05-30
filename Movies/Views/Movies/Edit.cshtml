@@ -1,0 +1,78 @@
+﻿@model Movies.Models.Movie
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Movie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MovieId" />
+            <div class="form-group">
+                <label asp-for="MovieName" class="control-label"></label>
+                <input asp-for="MovieName" class="form-control" />
+                <span asp-validation-for="MovieName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Released" class="control-label"></label>
+                <input asp-for="Released" class="form-control" />
+                <span asp-validation-for="Released" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Plot" class="control-label"></label>
+                <input asp-for="Plot" class="form-control" />
+                <span asp-validation-for="Plot" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Poster" class="control-label"></label>
+                <input asp-for="Poster" class="form-control" />
+                <span asp-validation-for="Poster" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProducerId" class="control-label"></label>
+                <select asp-for="ProducerId" class="form-control" asp-items="ViewBag.ProducerId"></select>
+                <span asp-validation-for="ProducerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <h4>Actors</h4>
+                <div>
+                    @{
+                        List<Movies.Models.VM.EditMovieVM> actors = ViewBag.Actors;
+
+
+                        foreach (var item in actors)
+                        {
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="checkbox" 
+                                                   name="selectedActors" 
+                                                   value="@item.ActorId"
+                                                   @(Html.Raw(item.InMovie ? "checked=\"checked\"" : "")) />
+                                       @item.Name
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
