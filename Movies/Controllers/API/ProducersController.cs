@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Routing;
 using Movies.Data;
 using Movies.Models;
 
-namespace Movies.Controllers
+namespace Movies.Controllers.API
 {
     [Produces("application/json")]
     [Route("api/Producers")]
