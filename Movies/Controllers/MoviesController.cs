@@ -30,13 +30,13 @@ namespace Movies.Controllers
 
         // GET: Movies/Details/5
         [HttpGet]
-        public IActionResult Details(int movieId)
+        public IActionResult Details(int id)
         {
             var movie = _context.Movies
                 .Include(m => m.Producer)
                 .Include(a => a.ActorMovies)
                 .ThenInclude(ma => ma.Actor)
-                .SingleOrDefault(m => m.MovieId == movieId);
+                .SingleOrDefault(m => m.MovieId == id);
 
             if (movie == null)
                 return NotFound();
