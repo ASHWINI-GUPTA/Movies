@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Movies.Data;
 using Movies.Models;
-using System.Threading.Tasks;
+using Movies.Services;
 
 namespace Movies.Controllers.API
 {
@@ -10,24 +9,23 @@ namespace Movies.Controllers.API
     [Route("api/Actors")]
     public class ActorController : Controller
     {
-        private readonly DBContext _context;
+        private readonly IActorService _actorService;
 
-        public ActorController(DBContext context)
+        public ActorController(IActorService actorService)
         {
-            _context = context;
+            _actorService = actorService;
         }
 
         // POST: api/Actors
         [HttpPost]
-        public async Task<IActionResult> PostActors([FromForm] Actor actor)
+        public IActionResult PostActors([FromForm] Actor actor)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Actors.Add(actor);
-            await _context.SaveChangesAsync();
+            _actorService.Create(actor);
 
             return RedirectToAction("Create", new RouteValueDictionary(
                         new { controller = "Movies", action = "Create" }));

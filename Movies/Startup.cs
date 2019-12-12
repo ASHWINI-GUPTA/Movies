@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Movies.Data;
+using Movies.Repository;
+using Movies.Services;
 
 namespace Movies
 {
@@ -23,6 +25,13 @@ namespace Movies
             services.AddDbContext<DBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IProducerRepository, ProducerRepository>();
+            services.AddScoped<IActorRepository, ActorRepository>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IActorService, ActorService>();
+            services.AddScoped<IProducerService, ProducerService>();
+            services.AddScoped<IMovieService, MovieService>();
+            
             services.AddControllersWithViews();
         }
 
