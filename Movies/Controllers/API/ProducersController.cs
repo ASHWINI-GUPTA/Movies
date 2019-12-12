@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Movies.Data;
 using Movies.Models;
+using Movies.Services;
 
 namespace Movies.Controllers.API
 {
@@ -10,24 +9,23 @@ namespace Movies.Controllers.API
     [Route("api/Producers")]
     public class ProducersController : Controller
     {
-        private readonly DBContext _context;
+        private readonly IProducerService _producerService;
 
-        public ProducersController(DBContext context)
+        public ProducersController(IProducerService producerService)
         {
-            _context = context;
+            _producerService = producerService;
         }
 
         // POST: api/Producers
         [HttpPost]
-        public async Task<IActionResult> PostProducer([FromForm] Producer producer)
+        public IActionResult PostProducer([FromForm] Producer producer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Producers.Add(producer);
-            await _context.SaveChangesAsync();
+            _producerService.Create(producer);
 
             return RedirectToAction("Create", new RouteValueDictionary(
                     new { controller = "Movies", action = "Create" }));
